@@ -1,0 +1,68 @@
+@model IEnumerable<WebApplication2.Models.ReporteRendimiento>
+
+@{
+    ViewData["Title"] = "Reporte de Rendimiento Academico por Curso";
+}
+
+<h1>Reporte de Rendimiento Academico por Curso</h1>
+
+<form asp-action="Index" asp-controller="Rendimiento" method="get">
+    <em>Seleccione un Curso</em>
+    <select asp-items="@ViewBag.cursos" name="codCurso" class="form-select" style="width:300px;display:inline"></select>
+    <button class="btn btn-primary">Consultar</button>
+</form>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-3">
+        <strong>Error:</strong> @ViewBag.Error
+    </div>
+}
+
+@if (ViewBag.totalRegistros > 0)
+{
+    <hr />
+    <h4>Detalle de Alumnos</h4>
+    <p><strong>Total de registros: @ViewBag.totalRegistros</strong></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo Alumno</th>
+                <th>Alumno</th>
+                <th>Nota 1</th>
+                <th>Nota 2</th>
+                <th>Examen</th>
+                <th>Promedio</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CodAlu</td>
+                    <td>@item.NomAlu</td>
+                    <td>@item.Nota1</td>
+                    <td>@item.Nota2</td>
+                    <td>@item.Examen</td>
+                    <td>@item.Promedio.ToString("F2")</td>
+                    <td>
+                        @if (item.Estado == "Aprobado")
+                        {
+                            <span class="text-success fw-bold">@item.Estado</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger fw-bold">@item.Estado</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (ViewBag.totalRegistros != null && ViewBag.totalRegistros == 0)
+{
+    <p>No se encontraron registros para el curso seleccionado.</p>
+}

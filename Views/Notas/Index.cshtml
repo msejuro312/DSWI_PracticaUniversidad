@@ -1,0 +1,66 @@
+@model IEnumerable<WebApplication2.Models.NotasPeriodo>
+
+@{
+    ViewData["Title"] = "Consulta de Notas por Periodo Academico";
+}
+
+<h1>Consulta de Notas por Periodo Academico</h1>
+
+<form asp-action="Index" asp-controller="Notas" method="get">
+    <em>Seleccione Periodo Academico</em>
+    <select name="periodo" asp-items="@ViewBag.periodos" class="form-select" style="width:200px;display:inline">
+        <option value="">-- Seleccione --</option>
+    </select>
+    <button class="btn btn-primary">Buscar</button>
+</form>
+
+@if (ViewBag.totalRegistros > 0)
+{
+    <p><strong>Total de registros encontrados: @ViewBag.totalRegistros</strong></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo Alumno</th>
+                <th>Alumno</th>
+                <th>Curso</th>
+                <th>Profesor</th>
+                <th>Nota 1</th>
+                <th>Nota 2</th>
+                <th>Examen</th>
+                <th>Promedio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CodAlu</td>
+                    <td>@item.NomAlu</td>
+                    <td>@item.NomCurso</td>
+                    <td>@item.NomProf</td>
+                    <td>@item.Nota1</td>
+                    <td>@item.Nota2</td>
+                    <td>@item.Examen</td>
+                    <td>@item.Promedio.ToString("F2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        @for (int i = 0; i < ViewBag.totalPaginas; i++)
+        {
+            <a asp-action="Index"
+               asp-route-page="@(i + 1)"
+               asp-route-periodo="@ViewBag.periodo"
+               class="@(i == ((int)ViewBag.page - 1) ? "btn btn-success" : "btn btn-primary")">
+                @(i + 1)
+            </a>
+        }
+    </div>
+}
+else if (!string.IsNullOrEmpty(ViewBag.periodo))
+{
+    <p>No se encontraron registros para el periodo ingresado.</p>
+}

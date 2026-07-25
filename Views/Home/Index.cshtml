@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">DSW1 - Desarrollo de Servicios Web I</h1>
+    <p>T1 - Primera Evaluacion</p>
+    <hr />
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Consulta de Notas por Periodo Academico</h5>
+                    <p class="card-text">Busqueda de notas filtrando por periodo academico con paginacion.</p>
+                    <a asp-controller="Notas" asp-action="Index" class="btn btn-primary">Ir a Notas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Reporte de Rendimiento Academico por Curso</h5>
+                    <p class="card-text">Reporte detallado del rendimiento de alumnos por curso.</p>
+                    <a asp-controller="Rendimiento" asp-action="Index" class="btn btn-primary">Ir a Rendimiento</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
