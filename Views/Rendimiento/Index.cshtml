@@ -19,10 +19,40 @@
     </div>
 }
 
-@if (ViewBag.totalRegistros > 0)
+@if (ViewBag.totalRegistros > 0 && ViewBag.resumen != null)
 {
+    var r = ViewBag.resumen;
+
     <hr />
-    <h4>Detalle de Alumnos</h4>
+    <h4>Resumen de Rendimiento Academico</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo Curso</th>
+                <th>Nombre Curso</th>
+                <th>Profesor</th>
+                <th>Cantidad Alumnos Matriculados</th>
+                <th>Promedio General del Curso</th>
+                <th>Aprobados (>=11)</th>
+                <th>Desaprobados (&lt;11)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@r.CodCurso</td>
+                <td>@r.NomCurso</td>
+                <td>@r.NomProf</td>
+                <td>@r.CantAlumnos</td>
+                <td>@r.PromGeneral.ToString("F2")</td>
+                <td>@r.Aprobados</td>
+                <td>@r.Desaprobados</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
+    <h4>Detalle de Alumnos del Curso</h4>
     <p><strong>Total de registros: @ViewBag.totalRegistros</strong></p>
 
     <table class="table">

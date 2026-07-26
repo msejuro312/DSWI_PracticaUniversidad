@@ -1,0 +1,275 @@
+Descripción detallada de la interfaz
+
+La imagen muestra una captura de pantalla de una aplicación web de gestión universitaria. Toda la interfaz utiliza un diseño limpio, basado en Bootstrap o un framework similar, con predominio de colores azul oscuro, blanco y gris claro.
+
+La resolución aproximada de la captura es de 568 × 384 píxeles.
+
+1. Barra de navegación superior (Navbar)
+
+En la parte superior existe una barra horizontal de color azul marino oscuro (#0b2e6d aproximadamente) que ocupa todo el ancho de la página.
+
+Lado izquierdo
+
+Hay un pequeño ícono blanco con forma de birrete (graduation cap).
+
+A la derecha del ícono aparece el texto:
+
+Sistema Universitario
+
+en color blanco.
+
+Después aparecen tres enlaces del menú horizontal:
+
+Inicio
+Notas por Periodo
+Reporte por Curso
+
+Todos están escritos en blanco.
+
+El enlace "Notas por Periodo" parece ser la sección activa.
+
+Lado derecho
+
+Hay un pequeño icono blanco de usuario.
+
+A la derecha aparece:
+
+Usuario
+
+seguido de una pequeña flecha hacia abajo (dropdown).
+
+No está desplegado el menú.
+
+2. Contenido principal
+
+Debajo de la navbar comienza el contenido principal con fondo completamente blanco.
+
+Existe un margen izquierdo y derecho considerable (aprox. 25 px).
+
+3. Título principal
+
+En la parte superior del contenido aparece un encabezado grande y en negrita:
+
+Consulta de Notas por Periodo Académico
+
+Está alineado a la izquierda.
+
+Color:
+
+gris muy oscuro / negro.
+
+4. Panel de búsqueda
+
+Debajo del título hay un contenedor rectangular con borde gris muy claro.
+
+Dentro del panel aparecen dos controles.
+
+Label
+
+A la izquierda:
+
+Periodo Académico:
+Select
+
+A la derecha del label existe un <select>.
+
+Valor seleccionado:
+
+2025-1
+
+A la derecha del select aparece la clásica flecha ▼ del dropdown.
+
+Botón Buscar
+
+Después del select aparece un botón azul.
+
+Color similar al azul Bootstrap.
+
+Contiene:
+
+ícono de lupa blanco
+
+y el texto:
+
+Buscar
+5. Mensaje de resultados
+
+Debajo del panel aparece una alerta verde clara.
+
+Tiene un icono circular verde con una marca de verificación (check).
+
+El texto dice:
+
+Registros encontrados: 10
+
+Todo dentro de una barra horizontal verde muy clara.
+
+6. Tabla de resultados
+
+Debajo aparece una tabla.
+
+La tabla ocupa prácticamente todo el ancho del contenedor.
+
+Encabezado
+
+La cabecera tiene fondo azul oscuro.
+
+Texto blanco.
+
+Las columnas son:
+
+Código Alumno
+Alumno
+Curso
+Profesor
+Nota 1
+Nota 2
+Examen
+Promedio
+7. Filas de la tabla
+
+Hay exactamente 10 registros visibles.
+
+Los datos son:
+
+Código	Alumno	Curso	Profesor	Nota1	Nota2	Examen	Promedio
+A0001	Juan Pérez García	Base de Datos II	Carlos Ramírez	14.00	15.00	16.00	15.00
+A0001	Juan Pérez García	Programación Web	Ana Torres	13.00	14.00	15.00	14.00
+A0002	María López Díaz	Base de Datos II	Carlos Ramírez	12.00	13.00	14.00	13.00
+A0002	María López Díaz	Programación Web	Ana Torres	14.00	15.00	17.00	15.33
+A0003	Pedro Sánchez R.	Redes de Computadoras	Luis Vargas	13.00	12.00	14.00	13.00
+A0003	Pedro Sánchez R.	Estructura de Datos	Ana Torres	11.00	12.00	13.00	12.00
+A0004	Lucía Fernández	Base de Datos II	Carlos Ramírez	15.00	16.00	16.00	15.67
+A0004	Lucía Fernández	Programación Web	Ana Torres	13.00	13.00	14.00	13.33
+A0005	Diego Morales	Redes de Computadoras	Luis Vargas	12.00	13.00	12.00	12.33
+A0005	Diego Morales	Estructura de Datos	Ana Torres	11.00	12.00	13.00	12.00
+8. Estilo de la tabla
+
+La tabla posee:
+
+encabezado azul oscuro
+texto blanco en encabezados
+filas blancas
+líneas divisorias grises muy suaves
+texto negro
+tipografía sans-serif
+números alineados al centro
+texto de nombres alineado a la izquierda
+
+No hay filas coloreadas alternadamente.
+
+9. Pie de la tabla
+
+En la esquina inferior izquierda aparece el texto:
+
+Mostrando 1 a 10 de 50 registros
+
+Esto indica que solamente se muestran 10 registros por página aunque existen 50 en total.
+
+10. Paginación
+
+En la esquina inferior derecha existe un control de paginación.
+
+Botones:
+
+< Anterior
+1
+2
+3
+4
+5
+Siguiente >
+
+Características:
+
+El número 1 está seleccionado.
+Tiene fondo azul.
+Texto blanco.
+
+Los demás botones:
+
+fondo blanco
+borde gris claro
+
+El botón Anterior aparece deshabilitado (gris claro).
+
+11. Paleta de colores
+
+La interfaz utiliza aproximadamente los siguientes colores:
+
+Navbar: azul marino oscuro (#0B2E6D aprox.)
+Cabecera de tabla: azul oscuro
+Botón Buscar: azul Bootstrap (#0d6efd aprox.)
+Fondo: blanco
+Bordes: gris muy claro (#dee2e6)
+Mensaje de éxito: verde claro (#d1e7dd)
+Texto principal: negro/gris oscuro
+Texto de cabeceras: blanco
+12. Tipografía
+
+La fuente parece ser similar a:
+
+Bootstrap por defecto
+Helvetica
+Arial
+Segoe UI
+
+Todo el diseño es consistente con Bootstrap 4 o Bootstrap 5.
+
+13. Estructura aproximada del DOM
+
+La organización visual de la página puede representarse así:
+
+Navbar
+├── Logo (birrete)
+├── Sistema Universitario
+├── Inicio
+├── Notas por Periodo
+├── Reporte por Curso
+└── Usuario ▼
+
+Container
+├── H2: Consulta de Notas por Periodo Académico
+│
+├── Card
+│   ├── Label: Periodo Académico
+│   ├── Select (2025-1)
+│   └── Botón Buscar
+│
+├── Alert Success
+│   └── Registros encontrados: 10
+│
+├── Table
+│   ├── Header
+│   │   ├── Código Alumno
+│   │   ├── Alumno
+│   │   ├── Curso
+│   │   ├── Profesor
+│   │   ├── Nota 1
+│   │   ├── Nota 2
+│   │   ├── Examen
+│   │   └── Promedio
+│   │
+│   └── 10 filas de datos
+│
+└── Footer Tabla
+    ├── Mostrando 1 a 10 de 50 registros
+    └── Paginación
+        ├── Anterior
+        ├── 1 (activo)
+        ├── 2
+        ├── 3
+        ├── 4
+        ├── 5
+        └── Siguiente
+14. Funcionalidad que transmite la interfaz
+
+La pantalla representa un módulo de consulta de notas académicas por período, donde el usuario:
+
+Selecciona un período académico (por ejemplo, 2025-1).
+Presiona el botón Buscar.
+El sistema muestra una alerta indicando cuántos registros se encontraron.
+Se presenta una tabla con las calificaciones de distintos alumnos por curso, incluyendo dos notas parciales, un examen y el promedio calculado.
+La tabla admite paginación, mostrando 10 registros por página de un total de 50. El usuario puede navegar entre páginas mediante los controles inferiores.
+
+En conjunto, la interfaz sigue un patrón CRUD de consulta típico de aplicaciones administrativas desarrolladas con Bootstrap y una tabla paginada.

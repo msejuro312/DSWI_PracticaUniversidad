@@ -1,0 +1,460 @@
+Descripción detallada de la interfaz
+
+La imagen muestra una pantalla de reporte de rendimiento académico por curso perteneciente a un sistema universitario web. El diseño mantiene exactamente el mismo estilo visual que la pantalla anterior: una aplicación desarrollada con Bootstrap (o un framework muy similar), utilizando una combinación de azul marino, blanco, gris claro y verde.
+
+La imagen además incluye, en la parte superior, una explicación de la fórmula utilizada para calcular el promedio.
+
+La resolución aproximada es de 568 × 489 píxeles.
+
+1. Explicación de la fórmula (parte superior)
+
+Antes de iniciar la interfaz del sistema aparece un pequeño texto explicativo.
+
+Texto:
+
+El promedio deberá calcularse mediante la fórmula:
+
+Debajo se encuentra una imagen con una fórmula matemática dentro de un rectángulo con borde negro.
+
+La fórmula mostrada es:
+
+                Nota1 + Nota2 + Examen
+Promedio = ----------------------------
+                     3
+
+Visualmente está representada como una fracción.
+
+Características:
+
+borde negro fino
+fondo blanco
+tipografía matemática (similar a Times New Roman)
+el numerador contiene:
+Nota1
+Nota2
+Examen
+el denominador es simplemente:
+3
+
+La caja está centrada horizontalmente.
+
+2. Navbar
+
+Debajo de la fórmula comienza la aplicación web.
+
+Existe una barra horizontal azul marino que ocupa todo el ancho.
+
+Lado izquierdo
+
+Hay un pequeño icono blanco con forma de birrete.
+
+Luego aparece:
+
+Sistema Universitario
+
+Después aparecen tres opciones del menú:
+
+Inicio
+Notas por Periodo
+Reporte por Curso
+
+En esta pantalla el elemento activo es:
+
+Reporte por Curso
+
+El enlace activo posee un fondo ligeramente más claro que el resto del menú.
+
+Lado derecho
+
+Hay un icono blanco de usuario.
+
+Luego:
+
+Usuario
+
+seguido por una pequeña flecha ▼ indicando un menú desplegable.
+
+3. Título principal
+
+Debajo de la navbar aparece un encabezado grande.
+
+Texto:
+
+Reporte de Rendimiento por Curso
+
+Está alineado a la izquierda.
+
+Fuente en negrita.
+
+Color negro/gris oscuro.
+
+4. Panel de consulta
+
+Debajo del título aparece un panel blanco con borde gris muy claro.
+
+Dentro del panel existe una fila horizontal.
+
+Label
+
+Texto:
+
+Curso:
+Select
+
+A la derecha aparece un <select> bastante ancho.
+
+El valor seleccionado es:
+
+C0001 - Base de Datos II
+
+En el extremo derecho del select aparece la flecha ▼ típica de un dropdown.
+
+Botón Consultar
+
+A la derecha del select hay un botón azul.
+
+Contiene:
+
+icono de lupa blanco
+texto
+Consultar
+5. Alerta de selección
+
+Debajo aparece una alerta verde clara.
+
+Tiene un icono circular verde con un check.
+
+Texto:
+
+Curso seleccionado: C0001 - Base de Datos II
+6. Primera tabla (Resumen del Rendimiento Académico)
+
+La primera tabla posee un encabezado azul oscuro.
+
+En la esquina izquierda del encabezado existe un pequeño icono blanco (tipo documento/lista).
+
+Texto del encabezado:
+
+Resumen de Rendimiento Académico
+Columnas
+
+La tabla contiene las siguientes columnas:
+
+Código Curso
+Nombre Curso
+Profesor
+Cantidad Alumnos Matriculados
+Promedio General del Curso
+Aprobados (>=11)
+Desaprobados (<11)
+Registro mostrado
+
+Existe únicamente una fila.
+
+Los datos son:
+
+Campo	Valor
+Código Curso	C0001
+Nombre Curso	Base de Datos II
+Profesor	Carlos Ramírez
+Cantidad Alumnos Matriculados	12
+Promedio General del Curso	13.75
+Aprobados	10
+Desaprobados	2
+Colores especiales
+
+El promedio:
+
+13.75
+
+está en color verde.
+
+El número:
+
+10
+
+(aprobados)
+
+también aparece en verde.
+
+El número:
+
+2
+
+(desaprobados)
+
+está en color rojo.
+
+7. Segunda tabla (Detalle de Alumnos del Curso)
+
+Debajo existe otra tabla.
+
+Su encabezado también es azul oscuro.
+
+Texto:
+
+Detalle de Alumnos del Curso
+Columnas
+
+Las columnas son:
+
+Código Alumno
+Alumno
+Nota 1
+Nota 2
+Examen
+Promedio
+Estado
+8. Registros
+
+Hay cinco alumnos.
+
+Alumno 1
+
+Código
+
+A0001
+
+Nombre
+
+Juan Pérez García
+
+Notas
+
+Nota 1: 14.00
+Nota 2: 15.00
+Examen: 16.00
+Promedio: 15.00
+
+Estado
+
+Aprobado
+
+El promedio está en color verde.
+
+El estado aparece dentro de una pequeña etiqueta (badge) verde.
+
+Alumno 2
+
+Código
+
+A0002
+
+Nombre
+
+María López Díaz
+
+Notas
+
+12.00
+13.00
+14.00
+13.00
+
+Estado
+
+Aprobado
+
+Promedio verde.
+
+Badge verde.
+
+Alumno 3
+
+Código
+
+A0003
+
+Nombre
+
+Pedro Sánchez R.
+
+Notas
+
+13.00
+12.00
+14.00
+13.00
+
+Estado
+
+Aprobado
+Alumno 4
+
+Código
+
+A0004
+
+Nombre
+
+Lucía Fernández
+
+Notas
+
+15.00
+16.00
+16.00
+15.67
+
+Estado
+
+Aprobado
+Alumno 5
+
+Código
+
+A0005
+
+Nombre
+
+Diego Morales
+
+Notas
+
+10.00
+11.00
+10.00
+10.33
+
+Estado
+
+Desaprobado
+
+El promedio:
+
+10.33
+
+está coloreado en rojo.
+
+La etiqueta del estado es roja.
+
+9. Colores de la segunda tabla
+
+Todos los alumnos aprobados presentan:
+
+promedio en verde
+badge verde con texto blanco
+
+El alumno desaprobado presenta:
+
+promedio rojo
+badge rojo con texto blanco
+10. Nota informativa
+
+Debajo de la tabla aparece una franja de color lila muy claro.
+
+Contiene un pequeño icono morado de información.
+
+Texto:
+
+Nota: Aprobado (promedio >= 11) - Desaprobado (promedio < 11)
+
+Esta nota explica el criterio utilizado para determinar el estado del alumno.
+
+11. Botón inferior
+
+En la esquina inferior izquierda aparece un botón azul.
+
+Contiene una flecha hacia la izquierda.
+
+Texto:
+
+Volver
+
+Es un botón típico de navegación para regresar a la pantalla anterior.
+
+12. Paleta de colores
+
+La interfaz mantiene exactamente la misma identidad visual que la pantalla anterior.
+
+Colores predominantes:
+
+Navbar: azul marino oscuro
+Encabezados de tablas: azul oscuro
+Fondo general: blanco
+Bordes: gris claro
+Botones: azul Bootstrap
+Alerta de éxito: verde claro
+Promedios aprobados: verde
+Promedios desaprobados: rojo
+Badge "Aprobado": verde
+Badge "Desaprobado": rojo
+Nota inferior: fondo lila claro
+13. Tipografía
+
+La fuente parece ser:
+
+Arial
+Helvetica
+Segoe UI
+
+Muy similar a Bootstrap.
+
+Los títulos están en negrita.
+
+Las tablas utilizan un tamaño de fuente ligeramente menor.
+
+14. Estructura aproximada del DOM
+Página
+│
+├── Texto
+│   └── "El promedio deberá calcularse mediante la fórmula:"
+│
+├── Imagen
+│   └── Fórmula matemática del promedio
+│
+├── Navbar
+│   ├── Logo
+│   ├── Sistema Universitario
+│   ├── Inicio
+│   ├── Notas por Periodo
+│   ├── Reporte por Curso (activo)
+│   └── Usuario ▼
+│
+├── Container
+│   │
+│   ├── H2
+│   │   └── Reporte de Rendimiento por Curso
+│   │
+│   ├── Card
+│   │   ├── Label: Curso
+│   │   ├── Select (C0001 - Base de Datos II)
+│   │   └── Botón Consultar
+│   │
+│   ├── Alert Success
+│   │   └── Curso seleccionado: C0001 - Base de Datos II
+│   │
+│   ├── Card
+│   │   └── Tabla Resumen
+│   │       ├── Código Curso
+│   │       ├── Nombre Curso
+│   │       ├── Profesor
+│   │       ├── Cantidad Alumnos
+│   │       ├── Promedio General
+│   │       ├── Aprobados
+│   │       └── Desaprobados
+│   │
+│   ├── Card
+│   │   └── Tabla Detalle
+│   │       ├── Código Alumno
+│   │       ├── Alumno
+│   │       ├── Nota 1
+│   │       ├── Nota 2
+│   │       ├── Examen
+│   │       ├── Promedio
+│   │       └── Estado
+│   │
+│   ├── Alert Info
+│   │   └── Nota: Aprobado (>=11) - Desaprobado (<11)
+│   │
+│   └── Botón
+│       └── Volver
+15. Funcionalidad que transmite la interfaz
+
+Esta pantalla representa un módulo de reporte de rendimiento académico por curso. El flujo de uso es el siguiente:
+
+El usuario selecciona un curso desde un listado desplegable (en este caso, C0001 - Base de Datos II).
+Al pulsar Consultar, el sistema muestra una alerta confirmando el curso seleccionado.
+Se presenta un resumen estadístico del curso con información como el profesor responsable, el número de alumnos matriculados, el promedio general del curso y el conteo de aprobados y desaprobados.
+Debajo se muestra un detalle por alumno, incluyendo las dos notas parciales, la nota del examen, el promedio calculado mediante la fórmula (Nota1 + Nota2 + Examen) / 3 y el estado final (Aprobado o Desaprobado).
+Los valores y estados se destacan visualmente mediante colores (verde para aprobados y rojo para desaprobados), facilitando una interpretación rápida del rendimiento académico. Finalmente, un botón Volver permite regresar a la pantalla anterior.

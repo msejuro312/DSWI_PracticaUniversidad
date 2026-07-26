@@ -481,6 +481,26 @@ begin
     from Notas n
     inner join Matricula m on n.idmatricula = m.idmatricula
     inner join Alumno a on m.codalu = a.codalu
+     where m.codcurso = @codCurso
+end
+go
+
+-- SP para Resumen de Rendimiento Academico por Curso
+create or alter procedure ResumenRendimientoCurso
+@codCurso char(5)
+as
+begin
+    select 
+        c.codcurso, c.nomcurso, p.nomprof,
+        count(distinct m.codalu) as cantAlumnos,
+        round(avg((n.nota1 + n.nota2 + n.examen) / 3.0), 2) as promGeneral,
+        sum(iif((n.nota1 + n.nota2 + n.examen) / 3.0 >= 11, 1, 0)) as aprobados,
+        sum(iif((n.nota1 + n.nota2 + n.examen) / 3.0 < 11, 1, 0)) as desaprobados
+    from Notas n
+    inner join Matricula m on n.idmatricula = m.idmatricula
+    inner join Curso c on m.codcurso = c.codcurso
+    inner join Profesor p on c.codprof = p.codprof
     where m.codcurso = @codCurso
+    group by c.codcurso, c.nomcurso, p.nomprof
 end
 go
