@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Estudio - DSWI T1</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; color: #333; }
+  .container { max-width: 1100px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  h1 { color: #0d6efd; border-bottom: 3px solid #0d6efd; padding-bottom: 10px; }
+  h2 { color: #198754; margin-top: 40px; border-left: 5px solid #198754; padding-left: 12px; }
+  h3 { color: #6f42c1; }
+  .file-path { background: #e9ecef; padding: 4px 10px; border-radius: 4px; font-family: monospace; font-size: 14px; display: inline-block; margin-bottom: 10px; }
+  pre { background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 6px; overflow-x: auto; font-size: 13px; line-height: 1.5; }
+  code { font-family: 'Cascadia Code', 'Fira Code', monospace; }
+  .comment { color: #6c7086; } .keyword { color: #89b4fa; } .string { color: #a6e3a1; }
+  .type { color: #f9e2af; } .num { color: #fab387; } .method { color: #89dceb; }
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+  th, td { border: 1px solid #dee2e6; padding: 10px; text-align: left; }
+  th { background: #0d6efd; color: #fff; }
+  tr:nth-child(even) { background: #f8f9fa; }
+  .card { background: #f0f9ff; border-left: 4px solid #0d6efd; padding: 15px; border-radius: 4px; margin: 15px 0; }
+  .card.warn { background: #fff3cd; border-left-color: #ffc107; }
+  .card.info { background: #e7f3ff; border-left-color: #0dcaf0; }
+  .toc a { color: #0d6efd; text-decoration: none; display: block; padding: 4px 0; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ul { list-style: none; padding-left: 20px; }
+  .nav-badge { display: inline-block; background: #0d6efd; color: #fff; border-radius: 50%; width: 28px; height: 28px; text-align: center; line-height: 28px; font-weight: 700; margin-right: 8px; }
+  .paso { display: inline-block; background: #6f42c1; color: #fff; border-radius: 12px; padding: 2px 12px; font-size: 12px; margin-right: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Guia de Estudio - DSWI T1</h1>
+<p><strong>Proyecto:</strong> WebApplication2 &mdash; <strong>Base de datos:</strong> BDUNIVERSIDAD2026</p>
+<p><strong>Curso:</strong> Desarrollo de Servicios Web I &mdash; <strong>Profesor:</strong> Rainer Flores</p>
+<p>Guia didactica que recorre cada archivo en el orden natural de construccion, explicando su proposito, sintaxis y relacion con los demas.</p>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2>Tabla de Contenido</h2>
+<div class="toc">
+<ol>
+  <li><a href="#s1">Script SQL &mdash; BDUNIVERSIDAD2026</a></li>
+  <li><a href="#s2">WebApplication2.csproj &mdash; Archivo de proyecto</a></li>
+  <li><a href="#s3">appsettings.json &mdash; Cadena de conexion</a></li>
+  <li><a href="#s4">Program.cs &mdash; Punto de entrada</a></li>
+  <li><a href="#s5">Modelos de datos</a>
+    <ul>
+      <li><a href="#s5a">NotasPeriodo.cs</a></li>
+      <li><a href="#s5b">Curso.cs</a></li>
+      <li><a href="#s5c">ReporteRendimiento.cs</a></li>
+      <li><a href="#s5d">ErrorViewModel.cs</a></li>
+    </ul>
+  </li>
+  <li><a href="#s6">Controladores</a>
+    <ul>
+      <li><a href="#s6a">HomeController.cs</a></li>
+      <li><a href="#s6b">NotasController.cs</a></li>
+      <li><a href="#s6c">RendimientoController.cs</a></li>
+    </ul>
+  </li>
+  <li><a href="#s7">Vistas (Views)</a>
+    <ul>
+      <li><a href="#s7a">_Layout.cshtml</a></li>
+      <li><a href="#s7b">Home/Index.cshtml</a></li>
+      <li><a href="#s7c">Notas/Index.cshtml</a></li>
+      <li><a href="#s7d">Rendimiento/Index.cshtml</a></li>
+    </ul>
+  </li>
+  <li><a href="#s8">Properties/launchSettings.json</a></li>
+  <li><a href="#s9">Resumen &mdash; Pasos para recrear</a></li>
+</ol>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s1">1. Script SQL &mdash; BDUNIVERSIDAD2026</h2>
+<div class="file-path">Script_SQL_BDUNIVERSIDAD2026_ok.sql</div>
+<p>Script que crea la base de datos <strong>BDUNIVERSIDAD2026</strong> con 6 tablas maestras y 1 tabla transaccional (<code>Matricula</code>). Contiene <code>INSERT</code> masivos con datos de prueba.</p>
+
+<h3>Estructura de tablas</h3>
+<table>
+<thead><tr><th>Tabla</th><th>Tipo</th><th>Proposito</th></tr></thead>
+<tbody>
+<tr><td>ALU</td><td>Maestra</td><td>Alumnos (CodAlu, NomAlu, ApeAlu, Email, FecNac, etc.)</td></tr>
+<tr><td>CUR</td><td>Maestra</td><td>Cursos (CodCur, NomCur, Cred, Horas)</td></tr>
+<tr><td>PRO</td><td>Maestra</td><td>Profesores (CodPro, NomPro, ApePro, Email, Especialidad)</td></tr>
+<tr><td>PER</td><td>Maestra</td><td>Periodos academicos (CodPer, NomPer, FecIni, FecFin)</td></tr>
+<tr><td>PREREQ</td><td>Maestra</td><td>Prerequisitos (CodCurso, CodPreReq)</td></tr>
+<tr><td>MAT</td><td>Transaccional</td><td>Matricula (Id, CodAlu, CodCur, CodPro, CodPer, Nota1, Nota2, Examen, Promedio)</td></tr>
+</tbody>
+</table>
+
+<div class="card">
+<strong>Conceptos clave:</strong>
+<ul>
+  <li><code>CREATE DATABASE</code> / <code>USE</code> &mdash; Crear y seleccionar BD</li>
+  <li><code>CREATE TABLE</code> con tipos: <code>INT, VARCHAR(n), DECIMAL(18,2), DATE, CHAR(n)</code></li>
+  <li><code>PRIMARY KEY</code> y <code>REFERENCES (FK)</code></li>
+  <li><code>INSERT INTO ... VALUES</code> para carga de datos</li>
+  <li><code>UPDATE Matricula SET Promedio = Nota1*0.25 + Nota2*0.25 + Examen*0.50</code> &mdash; Formula de promedio ponderado</li>
+</ul>
+</div>
+
+<pre><span class="comment">-- Fragmento ilustrativo</span>
+<span class="keyword">CREATE TABLE</span> ALU (
+    CodAlu    <span class="type">INT</span> <span class="keyword">NOT NULL</span>,
+    NomAlu    <span class="type">VARCHAR(80)</span>,
+    ApeAlu    <span class="type">VARCHAR(80)</span>,
+    Email     <span class="type">VARCHAR(100)</span>,
+    FecNac    <span class="type">DATE</span>,
+    <span class="keyword">PRIMARY KEY</span> (CodAlu)
+);
+
+<span class="keyword">CREATE TABLE</span> MAT (
+    Id        <span class="type">INT</span> <span class="keyword">IDENTITY(1,1)</span>,
+    CodAlu    <span class="type">INT</span> <span class="keyword">REFERENCES</span> ALU(CodAlu),
+    CodCur    <span class="type">CHAR(3)</span> <span class="keyword">REFERENCES</span> CUR(CodCur),
+    CodPro    <span class="type">INT</span> <span class="keyword">REFERENCES</span> PRO(CodPro),
+    CodPer    <span class="type">CHAR(4)</span> <span class="keyword">REFERENCES</span> PER(CodPer),
+    Nota1     <span class="type">DECIMAL(18,2)</span>,
+    Nota2     <span class="type">DECIMAL(18,2)</span>,
+    Examen    <span class="type">DECIMAL(18,2)</span>,
+    Promedio  <span class="type">DECIMAL(18,2)</span>,
+    <span class="keyword">PRIMARY KEY</span> (Id)
+);</pre>
+
+<div class="card warn">
+<strong>Dato importante:</strong> El campo <code>Promedio</code> se calcula con <code>UPDATE MAT SET Promedio = Nota1*0.25 + Nota2*0.25 + Examen*0.50</code>. La formula da peso de 25% a cada nota parcial y 50% al examen final.
+</div>
+
+<div class="card info">
+<strong>Queries usados en la app:</strong>
+<ul>
+  <li><strong>Notas por periodo:</strong> <code>SELECT MAT.*, ALU.NomAlu, CUR.NomCur, PRO.NomPro FROM MAT JOIN ALU ON ... JOIN CUR ON ... JOIN PRO ON ... WHERE CodPer = @p</code></li>
+  <li><strong>Rendimiento por curso:</strong> Similar pero filtrando por CodCur y calculando estado segun Promedio</li>
+  <li><strong>Cursos:</strong> <code>SELECT CodCur, NomCur FROM CUR</code> para llenar dropdown</li>
+  <li><strong>Periodos:</strong> <code>SELECT CodPer, NomPer FROM PER</code> para llenar dropdown</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s2">2. WebApplication2.csproj &mdash; Archivo de proyecto</h2>
+<div class="file-path">WebApplication2.csproj</div>
+<p>Define el SDK, framework, paquetes NuGet y configuracion del proyecto ASP.NET Core.</p>
+
+<pre>&lt;<span class="keyword">Project</span> <span class="method">Sdk</span>=<span class="string">"Microsoft.NET.Sdk.Web"</span>&gt;
+  &lt;<span class="keyword">PropertyGroup</span>&gt;
+    &lt;<span class="method">TargetFramework</span>&gt;net8.0&lt;/<span class="method">TargetFramework</span>&gt;
+    &lt;<span class="method">Nullable</span>&gt;enable&lt;/<span class="method">Nullable</span>&gt;
+    &lt;<span class="method">ImplicitUsings</span>&gt;enable&lt;/<span class="method">ImplicitUsings</span>&gt;
+  &lt;/<span class="keyword">PropertyGroup</span>&gt;
+
+  &lt;<span class="keyword">ItemGroup</span>&gt;
+    &lt;<span class="method">PackageReference</span> <span class="method">Include</span>=<span class="string">"Microsoft.Data.SqlClient"</span> <span class="method">Version</span>=<span class="string">"5.2.2"</span> /&gt;
+  &lt;/<span class="keyword">ItemGroup</span>&gt;
+&lt;/<span class="keyword">Project</span>&gt;</pre>
+
+<div class="card">
+<strong>Explicacion:</strong>
+<ul>
+  <li><code>Sdk="Microsoft.NET.Sdk.Web"</code> &mdash; SDK especifico para apps web ASP.NET Core</li>
+  <li><code>net8.0</code> &mdash; Framework .NET 8 (LTS vigente)</li>
+  <li><code>Nullable</code> enable &mdash; Habilita tipos anulables (string? etc.)</li>
+  <li><code>ImplicitUsings</code> enable &mdash; Importa automaticamente <code>System</code>, <code>System.Collections.Generic</code>, <code>System.Linq</code>, <code>System.Threading.Tasks</code>, <code>Microsoft.AspNetCore.Mvc</code>, etc.</li>
+  <li><code>Microsoft.Data.SqlClient</code> 5.2.2 &mdash; Driver ADO.NET para SQL Server (no usa Entity Framework)</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s3">3. appsettings.json &mdash; Cadena de conexion</h2>
+<div class="file-path">appsettings.json</div>
+<p>Archivo de configuracion que almacena la cadena de conexion a SQL Server y otros ajustes.</p>
+
+<pre>{
+  <span class="string">"Logging"</span>: {
+    <span class="string">"LogLevel"</span>: {
+      <span class="string">"Default"</span>: <span class="string">"Information"</span>,
+      <span class="string">"Microsoft.AspNetCore"</span>: <span class="string">"Warning"</span>
+    }
+  },
+  <span class="string">"AllowedHosts"</span>: <span class="string">"*"</span>,
+  <span class="string">"ConnectionStrings"</span>: {
+    <span class="string">"DefaultConnection"</span>: <span class="string">"Server=DESKTOP-FQ5JGPJ\\SQLEXPRESS;Database=BDUNIVERSIDAD2026;Trusted_Connection=True;TrustServerCertificate=True;"</span>
+  }
+}</pre>
+
+<div class="card">
+<strong>Explicacion:</strong>
+<ul>
+  <li><code>ConnectionStrings:DefaultConnection</code> &mdash; Nombre usado en <code>Program.cs</code> para recuperarla: <code>builder.Configuration.GetConnectionString("DefaultConnection")</code></li>
+  <li><code>Server=...</code> &mdash; Nombre del servidor SQL Server con instancia SQLEXPRESS</li>
+  <li><code>Database=BDUNIVERSIDAD2026</code> &mdash; Base de datos creada por el script SQL</li>
+  <li><code>Trusted_Connection=True</code> &mdash; Usa autenticacion de Windows</li>
+  <li><code>TrustServerCertificate=True</code> &mdash; Omite validacion SSL (entorno local)</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s4">4. Program.cs &mdash; Punto de entrada</h2>
+<div class="file-path">Program.cs</div>
+<p>Configura los servicios de la aplicacion, el pipeline HTTP y arranca el servidor web.</p>
+
+<pre><span class="keyword">var</span> builder = WebApplication.CreateBuilder(args);
+
+<span class="comment">// Registrar servicios en el contenedor DI</span>
+builder.Services.AddControllersWithViews();
+
+<span class="keyword">var</span> app = builder.Build();
+
+<span class="comment">// Middleware pipeline</span>
+<span class="keyword">if</span> (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler(<span class="string">"/Home/Error"</span>);
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: <span class="string">"default"</span>,
+    pattern: <span class="string">"{controller=Home}/{action=Index}/{id?}"</span>
+);
+
+app.Run();</pre>
+
+<div class="card">
+<strong>Explicacion linea por linea:</strong>
+<table>
+<tr><th>Linea</th><th>Que hace</th></tr>
+<tr><td><code>builder.Services.AddControllersWithViews()</code></td><td>Registra servicios MVC (controladores + vistas). Equivale a <code>AddMvc()</code> pero mas ligero.</td></tr>
+<tr><td><code>UseExceptionHandler("/Home/Error")</code></td><td>Redirige a la pagina de error en produccion.</td></tr>
+<tr><td><code>UseHsts()</code></td><td>HTTP Strict Transport Security (solo desarrollo).</td></tr>
+<tr><td><code>UseHttpsRedirection()</code></td><td>Redirige HTTP a HTTPS.</td></tr>
+<tr><td><code>UseStaticFiles()</code></td><td>Sirve archivos estaticos de <code>wwwroot</code> (CSS, JS, imagenes).</td></tr>
+<tr><td><code>UseRouting()</code></td><td>Activa el enrutamiento.</td></tr>
+<tr><td><code>UseAuthorization()</code></td><td>Middleware de autorizacion.</td></tr>
+<tr><td><code>MapControllerRoute(...)</code></td><td>Ruta por defecto: <code>{controller=Home}/{action=Index}/{id?}</code></td></tr>
+</table>
+</div>
+
+<div class="card info">
+<strong>Importante:</strong> Este proyecto NO usa Entity Framework. La conexion a BD se hace con ADO.NET puro (<code>Microsoft.Data.SqlClient</code>) directamente en los controladores. Cada controlador crea su propia conexion con <code>new SqlConnection(...)</code>.
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s5">5. Modelos de datos</h2>
+<p>Clases que representan las entidades usadas para transportar datos entre el controlador y la vista.</p>
+
+<hr><!-- ---------- 5a ---------- -->
+<h3 id="s5a">5.1 NotasPeriodo.cs</h3>
+<div class="file-path">Models\NotasPeriodo.cs</div>
+
+<pre><span class="keyword">namespace</span> WebApplication2.Models;
+
+<span class="keyword">public class</span> <span class="type">NotasPeriodo</span>
+{
+    <span class="keyword">public int</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public int</span> CodAlu { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span>? NomAlu { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span>? NomCurso { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span>? NomProf { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Nota1 { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Nota2 { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Examen { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Promedio { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+}</pre>
+
+<div class="card">
+<strong>Detalle:</strong>
+<ul>
+  <li>Usa <code>decimal?</code> (nullable) porque las notas podrian ser NULL en BD</li>
+  <li><code>string?</code> tambien nullable por la configuracion <code>Nullable</code> enable en .csproj</li>
+  <li>Propiedades de solo lectura/escritura con <code>{ get; set; }</code> (auto-properties)</li>
+  <li>Namespace: <code>WebApplication2.Models</code> &mdash; importado en vistas via <code>_ViewImports.cshtml</code></li>
+</ul>
+</div>
+
+<hr><!-- ---------- 5b ---------- -->
+<h3 id="s5b">5.2 Curso.cs</h3>
+<div class="file-path">Models\Curso.cs</div>
+
+<pre><span class="keyword">namespace</span> WebApplication2.Models;
+
+<span class="keyword">public class</span> <span class="type">Curso</span>
+{
+    <span class="keyword">public string</span>? CodCur { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span>? NomCur { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+}</pre>
+
+<div class="card">
+<strong>Uso:</strong> Sirve exclusivamente para poblar el <code>&lt;select&gt;</code> de cursos en la vista <code>Rendimiento/Index.cshtml</code>. Se carga desde el controlador mediante <code>SELECT CodCur, NomCur FROM CUR</code>.
+</div>
+
+<hr><!-- ---------- 5c ---------- -->
+<h3 id="s5c">5.3 ReporteRendimiento.cs</h3>
+<div class="file-path">Models\ReporteRendimiento.cs</div>
+
+<pre><span class="keyword">namespace</span> WebApplication2.Models;
+
+<span class="keyword">public class</span> <span class="type">ReporteRendimiento</span>
+{
+    <span class="keyword">public int</span> CodAlu { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span>? NomAlu { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Nota1 { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Nota2 { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Examen { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public decimal</span>? Promedio { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public string</span>? Estado { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+}</pre>
+
+<div class="card">
+<strong>Novedad:</strong> Propiedad <code>Estado</code> que NO existe en BD. Se calcula en el controlador:
+<br><code>Estado = item.Promedio &gt;= 13 ? "Aprobado" : "Desaprobado"</code>
+<br>Esto se conoce como <strong>propiedad calculada en memoria</strong> (no mapeada directamente a la BD).
+</div>
+
+<hr><!-- ---------- 5d ---------- -->
+<h3 id="s5d">5.4 ErrorViewModel.cs</h3>
+<div class="file-path">Models\ErrorViewModel.cs</div>
+<p>Modelo generado por la plantilla predeterminada, usado en la vista de error.</p>
+
+<pre><span class="keyword">namespace</span> WebApplication2.Models;
+
+<span class="keyword">public class</span> <span class="type">ErrorViewModel</span>
+{
+    <span class="keyword">public string</span>? RequestId { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    <span class="keyword">public bool</span> ShowRequestId => !<span class="keyword">string</span>.IsNullOrEmpty(RequestId);
+}</pre>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s6">6. Controladores</h2>
+<p>Los controladores reciben peticiones HTTP, ejecutan logica (consultan BD) y devuelven vistas con datos.</p>
+
+<hr><!-- ---------- 6a ---------- -->
+<h3 id="s6a">6.1 HomeController.cs</h3>
+<div class="file-path">Controllers\HomeController.cs</div>
+
+<pre><span class="keyword">namespace</span> WebApplication2.Controllers;
+
+<span class="keyword">public class</span> <span class="type">HomeController</span> : Controller
+{
+    <span class="keyword">private readonly</span> ILogger&lt;HomeController&gt; _logger;
+
+    <span class="keyword">public</span> HomeController(ILogger&lt;HomeController&gt; logger)
+    {
+        _logger = logger;
+    }
+
+    <span class="keyword">public</span> IActionResult Index()
+    {
+        <span class="keyword">return</span> View();
+    }
+
+    <span class="keyword">public</span> IActionResult Privacy()
+    {
+        <span class="keyword">return</span> View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = <span class="keyword">true</span>)]
+    <span class="keyword">public</span> IActionResult Error()
+    {
+        <span class="keyword">return</span> View(<span class="keyword">new</span> ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+}</pre>
+
+<div class="card">
+<strong>Puntos clave:</strong>
+<ul>
+  <li><code>: Controller</code> &mdash; Hereda de la clase base MVC</li>
+  <li><code>ILogger&lt;HomeController&gt;</code> &mdash; Inyeccion de dependencia del logger</li>
+  <li><code>IActionResult</code> &mdash; Tipo de retorno que puede ser <code>View()</code>, <code>Redirect()</code>, <code>Json()</code>, etc.</li>
+  <li><code>[ResponseCache(...)]</code> &mdash; Atributo que evita cacheo de la pagina de error</li>
+  <li><code>View()</code> sin parametros &mdash; Busca la vista <code>Views/Home/&lt;nombreAccion&gt;.cshtml</code></li>
+  <li><code>View(modelo)</code> &mdash; Pasa un modelo a la vista (usado en Error)</li>
+</ul>
+</div>
+
+<hr><!-- ---------- 6b ---------- -->
+<h3 id="s6b">6.2 NotasController.cs</h3>
+<div class="file-path">Controllers\NotasController.cs</div>
+<p>Controlador mas importante del T1. Consulta notas filtradas por periodo academico con <strong>paginacion</strong>.</p>
+
+<pre><span class="keyword">namespace</span> WebApplication2.Controllers;
+
+<span class="keyword">public class</span> <span class="type">NotasController</span> : Controller
+{
+    <span class="keyword">private readonly</span> IConfiguration _configuration;
+
+    <span class="keyword">public</span> NotasController(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
+    <span class="keyword">public</span> IActionResult Index(<span class="keyword">string</span>? periodo, <span class="keyword">int</span> page = 1)
+    {
+        <span class="keyword">string</span> connectionString = _configuration.GetConnectionString(<span class="string">"DefaultConnection"</span>);
+        <span class="keyword">int</span> filasPagina = 8;
+
+        <span class="keyword">using</span> (SqlConnection cn = <span class="keyword">new</span> SqlConnection(connectionString))
+        {
+            cn.Open();
+
+            <span class="comment">// 1. Cargar periodos en ViewBag</span>
+            SqlCommand cmdPer = <span class="keyword">new</span> SqlCommand(<span class="string">"SELECT CodPer, NomPer FROM PER"</span>, cn);
+            SqlDataReader drPer = cmdPer.ExecuteReader();
+            ViewBag.periodos = <span class="keyword">new</span> SelectList( ... );
+            drPer.Close();
+
+            <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(periodo))
+            {
+                <span class="comment">// 2. Contar total registros</span>
+                SqlCommand cmdCount = <span class="keyword">new</span> SqlCommand(<span class="string">"SELECT COUNT(*) FROM MAT WHERE CodPer = @p"</span>, cn);
+                cmdCount.Parameters.AddWithValue(<span class="string">"@p"</span>, periodo);
+                <span class="keyword">int</span> totalRegistros = (<span class="keyword">int</span>)cmdCount.ExecuteScalar();
+                ViewBag.totalRegistros = totalRegistros;
+                ViewBag.totalPaginas = (<span class="keyword">int</span>)Math.Ceiling((<span class="keyword">double</span>)totalRegistros / filasPagina);
+                ViewBag.page = page;
+                ViewBag.periodo = periodo;
+
+                <span class="comment">// 3. Consultar con paginacion (OFFSET / FETCH NEXT)</span>
+                SqlCommand cmd = <span class="keyword">new</span> SqlCommand(<span class="string">@"SELECT M.Id, M.CodAlu, A.NomAlu,
+                    C.NomCur, P.NomPro, M.Nota1, M.Nota2, M.Examen, M.Promedio
+                    FROM MAT M JOIN ALU A ON M.CodAlu = A.CodAlu
+                    JOIN CUR C ON M.CodCur = C.CodCur
+                    JOIN PRO P ON M.CodPro = P.CodPro
+                    WHERE M.CodPer = @p
+                    ORDER BY M.Id
+                    OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY"</span>, cn);
+                cmd.Parameters.AddWithValue(<span class="string">"@p"</span>, periodo);
+                cmd.Parameters.AddWithValue(<span class="string">"@offset"</span>, (page - 1) * filasPagina);
+                cmd.Parameters.AddWithValue(<span class="string">"@limit"</span>, filasPagina);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                List&lt;NotasPeriodo&gt; lista = <span class="keyword">new</span> List&lt;NotasPeriodo&gt;();
+                <span class="keyword">while</span> (dr.Read())
+                {
+                    lista.Add(<span class="keyword">new</span> NotasPeriodo { ... });
+                }
+                <span class="keyword">return</span> View(lista);
+            }
+        }
+        <span class="keyword">return</span> View(<span class="keyword">new</span> List&lt;NotasPeriodo&gt;());
+    }
+}</pre>
+
+<div class="card">
+<strong>Conceptos nuevos (vs. HomeController):</strong>
+<table>
+<tr><th>Concepto</th><th>Explicacion</th></tr>
+<tr><td><code>IConfiguration</code></td><td>Interfaz para leer configuraciones (appsettings.json). Se inyecta por constructor.</td></tr>
+<tr><td><code>GetConnectionString("DefaultConnection")</code></td><td>Recupera la cadena de conexion desde <code>appsettings.json</code></td></tr>
+<tr><td><code>SqlConnection</code></td><td>Clase de ADO.NET para conectar a SQL Server.</td></tr>
+<tr><td><code>SqlCommand</code></td><td>Ejecuta comandos SQL con parametros (<code>AddWithValue</code>)</td></tr>
+<tr><td><code>ExecuteReader()</code></td><td>Ejecuta SELECT y devuelve un <code>SqlDataReader</code> para leer filas.</td></tr>
+<tr><td><code>ExecuteScalar()</code></td><td>Ejecuta SELECT y devuelve la primera columna de la primera fila (COUNT, SUM, etc.).</td></tr>
+<tr><td><code>OFFSET / FETCH NEXT</code></td><td>Paginacion a nivel SQL (mas eficiente que cargar todo en memoria).</td></tr>
+<tr><td><code>ViewBag</code></td><td>Objeto dinamico para pasar datos del controlador a la vista SIN usar el modelo fuerte (<code>@model</code>).</td></tr>
+<tr><td><code>SelectList</code></td><td>Helper para poblar <code>&lt;select&gt;</code> desde una lista de datos.</td></tr>
+<tr><td><code>Math.Ceiling()</code></td><td>Redondea hacia arriba para calcular total de paginas.</td></tr>
+</table>
+</div>
+
+<div class="card warn">
+<strong>Parametros con AddWithValue:</strong> Se usa <code>@p</code>, <code>@offset</code>, <code>@limit</code> como parametros nominativos. Esto previene inyeccion SQL.
+</div>
+
+<hr><!-- ---------- 6c ---------- -->
+<h3 id="s6c">6.3 RendimientoController.cs</h3>
+<div class="file-path">Controllers\RendimientoController.cs</div>
+<p>Reporte de rendimiento academico filtrado por curso. Incluye calculo de estado (Aprobado/Desaprobado) en memoria.</p>
+
+<pre><span class="keyword">namespace</span> WebApplication2.Controllers;
+
+<span class="keyword">public class</span> <span class="type">RendimientoController</span> : Controller
+{
+    <span class="keyword">private readonly</span> IConfiguration _configuration;
+
+    <span class="keyword">public</span> RendimientoController(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
+    <span class="keyword">public</span> IActionResult Index(<span class="keyword">string</span>? codCurso)
+    {
+        <span class="keyword">string</span> connectionString = _configuration.GetConnectionString(<span class="string">"DefaultConnection"</span>);
+
+        <span class="keyword">using</span> (SqlConnection cn = <span class="keyword">new</span> SqlConnection(connectionString))
+        {
+            cn.Open();
+
+            <span class="comment">// Cargar cursos para el dropdown</span>
+            SqlCommand cmdCur = <span class="keyword">new</span> SqlCommand(<span class="string">"SELECT CodCur, NomCur FROM CUR"</span>, cn);
+            SqlDataReader drCur = cmdCur.ExecuteReader();
+            ViewBag.cursos = <span class="keyword">new</span> SelectList( ... );
+            drCur.Close();
+
+            <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(codCurso))
+            {
+                <span class="comment">// Validar que el curso exista</span>
+                SqlCommand cmdVal = <span class="keyword">new</span> SqlCommand(<span class="string">"SELECT COUNT(*) FROM CUR WHERE CodCur = @c"</span>, cn);
+                cmdVal.Parameters.AddWithValue(<span class="string">"@c"</span>, codCurso);
+                <span class="keyword">int</span> existe = (<span class="keyword">int</span>)cmdVal.ExecuteScalar();
+
+                <span class="keyword">if</span> (existe == 0)
+                {
+                    ViewBag.Error = <span class="string">"El codigo de curso ingresado no existe."</span>;
+                    <span class="keyword">return</span> View(<span class="keyword">new</span> List&lt;ReporteRendimiento&gt;());
+                }
+
+                <span class="comment">// Consultar notas del curso</span>
+                SqlCommand cmd = <span class="keyword">new</span> SqlCommand(<span class="string">@"SELECT M.CodAlu, A.NomAlu, M.Nota1, M.Nota2, M.Examen, M.Promedio
+                    FROM MAT M JOIN ALU A ON M.CodAlu = A.CodAlu WHERE M.CodCur = @c"</span>, cn);
+                cmd.Parameters.AddWithValue(<span class="string">"@c"</span>, codCurso);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+                List&lt;ReporteRendimiento&gt; lista = <span class="keyword">new</span> List&lt;ReporteRendimiento&gt;();
+                <span class="keyword">while</span> (dr.Read())
+                {
+                    <span class="keyword">var</span> item = <span class="keyword">new</span> ReporteRendimiento { ... };
+                    item.Estado = item.Promedio &gt;= 13 ? <span class="string">"Aprobado"</span> : <span class="string">"Desaprobado"</span>;
+                    lista.Add(item);
+                }
+                ViewBag.totalRegistros = lista.Count;
+                <span class="keyword">return</span> View(lista);
+            }
+        }
+        <span class="keyword">return</span> View(<span class="keyword">new</span> List&lt;ReporteRendimiento&gt;());
+    }
+}</pre>
+
+<div class="card">
+<strong>Diferencias con NotasController:</strong>
+<ul>
+  <li>Usa validacion: verifica si el curso existe antes de consultar</li>
+  <li>No tiene paginacion (todas las filas en una sola pagina)</li>
+  <li>Calcula <code>Estado</code> en memoria: <code>Promedio >= 13 ? "Aprobado" : "Desaprobado"</code></li>
+  <li>Muestra error via <code>ViewBag.Error</code> si el curso no existe</li>
+  <li><code>ViewBag.totalRegistros</code> se asigna desde <code>lista.Count</code> (ya en memoria)</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s7">7. Vistas (Views)</h2>
+<p>Las vistas son archivos Razor (.cshtml) que mezclan HTML con codigo C# mediante la sintaxis <code>@</code>.</p>
+
+<hr><!-- ---------- 7a ---------- -->
+<h3 id="s7a">7.1 _Layout.cshtml &mdash; Plantilla maestra</h3>
+<div class="file-path">Views\Shared\_Layout.cshtml</div>
+
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;@ViewData[<span class="string">"Title"</span>] - DSWI T1&lt;/title&gt;
+    &lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"~/lib/bootstrap/dist/css/bootstrap.min.css"</span> /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav&gt;...&lt;/nav&gt;  <span class="comment">&lt;!-- Navbar con enlaces a Home, Notas, Rendimiento, Privacidad --&gt;</span>
+    &lt;div class=<span class="string">"container"</span>&gt;
+        &lt;main&gt;@RenderBody()&lt;/main&gt;  <span class="comment">&lt;!-- Aqui se inyecta el contenido de cada vista --&gt;</span>
+    &lt;/div&gt;
+    &lt;footer&gt;...&lt;/footer&gt;
+    &lt;script src=<span class="string">"~/lib/jquery/dist/jquery.min.js"</span>&gt;&lt;/script&gt;
+    &lt;script src=<span class="string">"~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"</span>&gt;&lt;/script&gt;
+    @await RenderSectionAsync(<span class="string">"Scripts"</span>, required: false)
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<div class="card">
+<strong>Conceptos Razor:</strong>
+<ul>
+  <li><code>@ViewData["Title"]</code> &mdash; Lee titulo definido en cada vista hija</li>
+  <li><code>@RenderBody()</code> &mdash; Punto de insercion del contenido de la vista hija</li>
+  <li><code>@RenderSectionAsync("Scripts", required: false)</code> &mdash; Permite que las vistas hijas agreguen scripts en el footer</li>
+  <li><code>~/lib/bootstrap/...</code> &mdash; La virgulilla <code>~</code> apunta a <code>wwwroot/</code></li>
+  <li><code>asp-controller="Notas" asp-action="Index"</code> &mdash; Tag helpers generan URLs automaticamente</li>
+</ul>
+</div>
+
+<hr><!-- ---------- 7b ---------- -->
+<h3 id="s7b">7.2 Home/Index.cshtml &mdash; Pagina principal</h3>
+<div class="file-path">Views\Home\Index.cshtml</div>
+<p>Pagina de bienvenida con dos tarjetas (cards) que enlazan a las dos funcionalidades principales.</p>
+
+<pre>@{
+    ViewData[<span class="string">"Title"</span>] = <span class="string">"Home"</span>;
+}
+
+&lt;h1&gt;DSW1 - Desarrollo de Servicios Web I&lt;/h1&gt;
+&lt;p&gt;T1 - Primera Evaluacion&lt;/p&gt;
+
+&lt;div class=<span class="string">"row"</span>&gt;
+    &lt;div class=<span class="string">"col-md-6"</span>&gt;
+        &lt;div class=<span class="string">"card"</span>&gt;
+            &lt;h5&gt;Consulta de Notas por Periodo Academico&lt;/h5&gt;
+            &lt;p&gt;Busqueda de notas filtrando por periodo academico con paginacion.&lt;/p&gt;
+            &lt;a asp-controller=<span class="string">"Notas"</span> asp-action=<span class="string">"Index"</span> class=<span class="string">"btn btn-primary"</span>&gt;Ir a Notas&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=<span class="string">"col-md-6"</span>&gt;
+        &lt;div class=<span class="string">"card"</span>&gt;
+            &lt;h5&gt;Reporte de Rendimiento Academico por Curso&lt;/h5&gt;
+            &lt;p&gt;Reporte detallado del rendimiento de alumnos por curso.&lt;/p&gt;
+            &lt;a asp-controller=<span class="string">"Rendimiento"</span> asp-action=<span class="string">"Index"</span> class=<span class="string">"btn btn-primary"</span>&gt;Ir a Rendimiento&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+
+<hr><!-- ---------- 7c ---------- -->
+<h3 id="s7c">7.3 Notas/Index.cshtml &mdash; Consulta de notas</h3>
+<div class="file-path">Views\Notas\Index.cshtml</div>
+
+<pre>@model IEnumerable&lt;WebApplication2.Models.NotasPeriodo&gt;
+
+@{
+    ViewData[<span class="string">"Title"</span>] = <span class="string">"Consulta de Notas por Periodo Academico"</span>;
+}
+
+&lt;h1&gt;Consulta de Notas por Periodo Academico&lt;/h1&gt;
+
+<span class="comment">&lt;!-- Formulario de filtro por periodo --&gt;</span>
+&lt;form asp-action=<span class="string">"Index"</span> method=<span class="string">"get"</span>&gt;
+    &lt;select name=<span class="string">"periodo"</span> asp-items=<span class="string">"@ViewBag.periodos"</span>&gt;
+        &lt;option value=<span class="string">""</span>&gt;-- Seleccione --&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;button&gt;Buscar&lt;/button&gt;
+&lt;/form&gt;
+
+@<span class="keyword">if</span> (ViewBag.totalRegistros &gt; 0)
+{
+    &lt;p&gt;&lt;strong&gt;Total: @ViewBag.totalRegistros&lt;/strong&gt;&lt;/p&gt;
+
+    <span class="comment">&lt;!-- Tabla con datos --&gt;</span>
+    &lt;table class=<span class="string">"table"</span>&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Codigo Alumno&lt;/th&gt;
+                &lt;th&gt;Alumno&lt;/th&gt;
+                &lt;th&gt;Curso&lt;/th&gt;
+                &lt;th&gt;Profesor&lt;/th&gt;
+                &lt;th&gt;Nota 1&lt;/th&gt;
+                &lt;th&gt;Nota 2&lt;/th&gt;
+                &lt;th&gt;Examen&lt;/th&gt;
+                &lt;th&gt;Promedio&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            @<span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> Model)
+            {
+                &lt;tr&gt;
+                    &lt;td&gt;@item.CodAlu&lt;/td&gt;
+                    &lt;td&gt;@item.NomAlu&lt;/td&gt;
+                    &lt;td&gt;@item.NomCurso&lt;/td&gt;
+                    &lt;td&gt;@item.NomProf&lt;/td&gt;
+                    &lt;td&gt;@item.Nota1&lt;/td&gt;
+                    &lt;td&gt;@item.Nota2&lt;/td&gt;
+                    &lt;td&gt;@item.Examen&lt;/td&gt;
+                    &lt;td&gt;@item.Promedio.ToString(<span class="string">"F2"</span>)&lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    <span class="comment">&lt;!-- Paginacion --&gt;</span>
+    &lt;div&gt;
+        @<span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; ViewBag.totalPaginas; i++)
+        {
+            &lt;a asp-action=<span class="string">"Index"</span>
+               asp-route-page=<span class="string">"@(i + 1)"</span>
+               asp-route-periodo=<span class="string">"@ViewBag.periodo"</span>
+               class=<span class="string">"@(...)"</span>&gt;@(i + 1)&lt;/a&gt;
+        }
+    &lt;/div&gt;
+}
+@<span class="keyword">else if</span> (!<span class="keyword">string</span>.IsNullOrEmpty(ViewBag.periodo))
+{
+    &lt;p&gt;No se encontraron registros para el periodo ingresado.&lt;/p&gt;
+}</pre>
+
+<div class="card">
+<strong>Conceptos Razor en esta vista:</strong>
+<ul>
+  <li><code>@model IEnumerable&lt;NotasPeriodo&gt;</code> &mdash; Declara el tipo del modelo fuerte</li>
+  <li><code>@foreach (var item in Model)</code> &mdash; Itera sobre la lista de registros</li>
+  <li><code>@item.Promedio.ToString("F2")</code> &mdash; Formato numerico con 2 decimales</li>
+  <li><code>asp-items="@ViewBag.periodos"</code> &mdash; Tag helper que genera las <code>&lt;option&gt;</code> del select</li>
+  <li><code>asp-route-page</code> / <code>asp-route-periodo</code> &mdash; Tag helpers para parametros de ruta</li>
+  <li><code>form method="get"</code> &mdash; Envia datos por query string (no POST)</li>
+</ul>
+</div>
+
+<hr><!-- ---------- 7d ---------- -->
+<h3 id="s7d">7.4 Rendimiento/Index.cshtml &mdash; Reporte de rendimiento</h3>
+<div class="file-path">Views\Rendimiento\Index.cshtml</div>
+
+<pre>@model IEnumerable&lt;WebApplication2.Models.ReporteRendimiento&gt;
+
+@{
+    ViewData[<span class="string">"Title"</span>] = <span class="string">"Reporte de Rendimiento Academico por Curso"</span>;
+}
+
+&lt;h1&gt;Reporte de Rendimiento Academico por Curso&lt;/h1&gt;
+
+&lt;form asp-action=<span class="string">"Index"</span> method=<span class="string">"get"</span>&gt;
+    &lt;select asp-items=<span class="string">"@ViewBag.cursos"</span> name=<span class="string">"codCurso"</span>&gt;&lt;/select&gt;
+    &lt;button&gt;Consultar&lt;/button&gt;
+&lt;/form&gt;
+
+@<span class="keyword">if</span> (ViewBag.Error != <span class="keyword">null</span>)
+{
+    &lt;div class=<span class="string">"alert alert-danger"</span>&gt;@ViewBag.Error&lt;/div&gt;
+}
+
+@<span class="keyword">if</span> (ViewBag.totalRegistros &gt; 0)
+{
+    &lt;table class=<span class="string">"table"</span>&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Codigo Alumno&lt;/th&gt;
+                &lt;th&gt;Alumno&lt;/th&gt;
+                &lt;th&gt;Nota 1&lt;/th&gt;
+                &lt;th&gt;Nota 2&lt;/th&gt;
+                &lt;th&gt;Examen&lt;/th&gt;
+                &lt;th&gt;Promedio&lt;/th&gt;
+                &lt;th&gt;Estado&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            @<span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> Model)
+            {
+                &lt;tr&gt;
+                    &lt;td&gt;@item.CodAlu&lt;/td&gt;
+                    &lt;td&gt;@item.NomAlu&lt;/td&gt;
+                    &lt;td&gt;@item.Nota1&lt;/td&gt;
+                    &lt;td&gt;@item.Nota2&lt;/td&gt;
+                    &lt;td&gt;@item.Examen&lt;/td&gt;
+                    &lt;td&gt;@item.Promedio.ToString(<span class="string">"F2"</span>)&lt;/td&gt;
+                    &lt;td&gt;
+                        @<span class="keyword">if</span> (item.Estado == <span class="string">"Aprobado"</span>)
+                        {
+                            &lt;span class=<span class="string">"text-success fw-bold"</span>&gt;@item.Estado&lt;/span&gt;
+                        }
+                        <span class="keyword">else</span>
+                        {
+                            &lt;span class=<span class="string">"text-danger fw-bold"</span>&gt;@item.Estado&lt;/span&gt;
+                        }
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+}
+@<span class="keyword">else if</span> (ViewBag.totalRegistros == 0)
+{
+    &lt;p&gt;No se encontraron registros para el curso seleccionado.&lt;/p&gt;
+}</pre>
+
+<div class="card">
+<strong>Novedades en esta vista:</strong>
+<ul>
+  <li>Renderizado condicional del <strong>Estado</strong>: verde si aprobado, rojo si desaprobado</li>
+  <li>Mensaje de error con <code>ViewBag.Error</code> si el curso no existe</li>
+  <li>Usa clases Bootstrap: <code>text-success</code> (verde), <code>text-danger</code> (rojo), <code>fw-bold</code> (negrita)</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s8">8. Properties/launchSettings.json</h2>
+<div class="file-path">Properties\launchSettings.json</div>
+<p>Configura como se ejecuta la aplicacion en desarrollo (puerto, variables de entorno, perfil de lanzamiento).</p>
+
+<pre>{
+  <span class="string">"profiles"</span>: {
+    <span class="string">"http"</span>: {
+      <span class="string">"commandName"</span>: <span class="string">"Project"</span>,
+      <span class="string">"dotnetRunMessages"</span>: <span class="keyword">true</span>,
+      <span class="string">"launchBrowser"</span>: <span class="keyword">true</span>,
+      <span class="string">"applicationUrl"</span>: <span class="string">"http://localhost:5254"</span>,
+      <span class="string">"environmentVariables"</span>: {
+        <span class="string">"ASPNETCORE_ENVIRONMENT"</span>: <span class="string">"Development"</span>
+      }
+    },
+    <span class="string">"https"</span>: {
+      <span class="string">"commandName"</span>: <span class="string">"Project"</span>,
+      <span class="string">"dotnetRunMessages"</span>: <span class="keyword">true</span>,
+      <span class="string">"launchBrowser"</span>: <span class="keyword">true</span>,
+      <span class="string">"applicationUrl"</span>: <span class="string">"https://localhost:7139;http://localhost:5254"</span>,
+      <span class="string">"environmentVariables"</span>: {
+        <span class="string">"ASPNETCORE_ENVIRONMENT"</span>: <span class="string">"Development"</span>
+      }
+    }
+  }
+}</pre>
+
+<div class="card">
+<strong>Detalle:</strong>
+<ul>
+  <li><code>launchBrowser: true</code> &mdash; Abre automaticamente el navegador al ejecutar</li>
+  <li><code>ASPNETCORE_ENVIRONMENT: Development</code> &mdash; Muestra pagina detallada de errores</li>
+  <li>Dos perfiles: <code>http</code> (puerto 5254) y <code>https</code> (puerto 7139)</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<h2 id="s9">9. Resumen &mdash; Pasos para recrear el proyecto desde cero</h2>
+
+<div class="card" style="border-left-color: #6f42c1; background: #f8f4ff;">
+<ol style="margin:0; padding-left:20px;">
+  <li><strong>Crear la BD:</strong> Ejecutar <code>Script_SQL_BDUNIVERSIDAD2026_ok.sql</code> en SQL Server Management Studio (SSMS).</li>
+  <li><strong>Crear proyecto:</strong> <code>dotnet new mvc -n WebApplication2</code></li>
+  <li><strong>Agregar paquete NuGet:</strong> <code>dotnet add package Microsoft.Data.SqlClient --version 5.2.2</code></li>
+  <li><strong>Configurar cadena de conexion:</strong> En <code>appsettings.json</code>, agregar <code>ConnectionStrings.DefaultConnection</code> apuntando a BDUNIVERSIDAD2026.</li>
+  <li><strong>Crear Models:</strong> <code>NotasPeriodo.cs</code>, <code>Curso.cs</code>, <code>ReporteRendimiento.cs</code> (y conservar <code>ErrorViewModel.cs</code> de la plantilla).</li>
+  <li><strong>Crear Controllers:</strong>
+    <ul>
+      <li><code>HomeController</code> (Index, Privacy, Error) &mdash; generado por plantilla</li>
+      <li><code>NotasController</code> (Index con filtro por periodo + paginacion)</li>
+      <li><code>RendimientoController</code> (Index con filtro por curso + estado calculado)</li>
+    </ul>
+  </li>
+  <li><strong>Crear Views:</strong> Adaptar Layout con navbar, crear vistas para Home, Notas, Rendimiento y Shared/Error.</li>
+  <li><strong>Ejecutar:</strong> <code>dotnet run</code> y probar en <code>http://localhost:5254</code>.</li>
+</ol>
+</div>
+
+<hr>
+
+<h2>Diagrama de flujo de datos</h2>
+<pre style="background: #f0f9ff; color: #333; font-size: 14px; line-height: 1.8;">
+  Navegador                    Servidor ASP.NET                SQL Server
+  =========                    =================              ==========
+     |                              |                              |
+     |-- GET /Notas/Index ---------&gt;|                              |
+     |                              |-- SELECT CodPer, NomPer ---&gt;|
+     |                              |&lt;--- periodos (dropdown) ----|
+     |                              |                              |
+     |&lt;--- Pagina con formulario ---|                              |
+     |                              |                              |
+     |-- GET /Notas/Index?periodo=P1-&gt;|                              |
+     |                              |-- SELECT COUNT(*) WHERE ---&gt;|
+     |                              |&lt;--- totalRegistros ---------|
+     |                              |                              |
+     |                              |-- SELECT con OFFSET/FETCH -&gt;|
+     |                              |&lt;--- 8 filas (pagina 1) -----|
+     |                              |                              |
+     |&lt;--- Tabla + paginacion ------|                              |
+     |                              |                              |
+</pre>
+
+<hr>
+
+<h2>Resumen de tecnologias usadas</h2>
+<table>
+<thead><tr><th>Tecnologia</th><th>Uso</th></tr></thead>
+<tbody>
+<tr><td>.NET 8 + ASP.NET Core MVC</td><td>Framework web con patron Modelo-Vista-Controlador</td></tr>
+<tr><td>C# 12</td><td>Lenguaje de programacion</td></tr>
+<tr><td>Microsoft.Data.SqlClient 5.2.2</td><td>ADO.NET para SQL Server</td></tr>
+<tr><td>SQL Server (Express)</td><td>Base de datos relacional</td></tr>
+<tr><td>Razor (.cshtml)</td><td>Motor de vistas con sintaxis C# embebido</td></tr>
+<tr><td>Bootstrap 5</td><td>Framework CSS (incluido con la plantilla)</td></tr>
+<tr><td>jQuery</td><td>Biblioteca JS (incluida con la plantilla)</td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<p style="text-align:center; color:#666;">Fin de la guia &mdash; DSWI T1 2026</p>
+
+</div>
+</body>
+</html>
